@@ -3,7 +3,7 @@ import { Phone, MessageCircle, Navigation, Star } from "lucide-react";
 import { StatusBadge } from "./StatusBadge";
 import { linkRotaGoogle, linkWhatsApp, prioridadeLabel, type Loja } from "@/lib/crm";
 
-export function LojaCard({ loja, distancia, extra }: { loja: Loja; distancia?: number; extra?: React.ReactNode }) {
+export function LojaCard({ loja, distancia, extra }: { loja: Loja; distancia?: number | undefined; extra?: React.ReactNode }) {
   const wa = linkWhatsApp(loja.whatsapp || loja.telefone);
   return (
     <div className="rounded-2xl border bg-card p-4">
