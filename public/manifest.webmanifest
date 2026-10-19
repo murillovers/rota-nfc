@@ -1,0 +1,10 @@
+{
+  "name": "Prospecta NFC",
+  "short_name": "Prospecta",
+  "start_url": "/painel",
+  "display": "standalone",
+  "background_color": "#f7f4ee",
+  "theme_color": "#1f3a2e",
+  "lang": "pt-BR",
+  "icons": [{ "src": "/favicon.ico", "sizes": "64x64", "type": "image/x-icon" }]
+}
