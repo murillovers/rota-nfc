@@ -22,7 +22,7 @@ export function LojaForm({ inicial, onSalvo }: { inicial?: Loja; onSalvo: (l: Lo
   const { data: cats } = useSuspenseQuery(categoriasQuery);
   const salvar = useSalvarLoja();
   const [v, setV] = useState<LojaInsert>(
-    inicial ?? { nome: "", cidade: "Caxias do Sul", status: "nao_visitada", prioridade: "media", categoria: cats[0]?.nome },
+    inicial ?? { nome: "", cidade: "Caxias do Sul", status: "nao_visitada", prioridade: "media", categoria: cats[0]?.nome ?? null },
   );
   const set = (k: keyof LojaInsert, val: unknown) => setV((p) => ({ ...p, [k]: val }));
 
@@ -35,7 +35,7 @@ export function LojaForm({ inicial, onSalvo }: { inicial?: Loja; onSalvo: (l: Lo
 
   async function enviar(e: React.FormEvent) {
     e.preventDefault();
-    if (!v.nome?.trim()) return toast.error("Informe o nome");
+    if (!v.nome?.trim()) return void toast.error("Informe o nome");
     try {
       const { user_id: _u, criada_em: _c, ...resto } = v as Loja;
       const l = await salvar.mutateAsync(resto);

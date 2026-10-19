@@ -47,13 +47,13 @@ function Ficha() {
     const { error } = await supabase.from("roteiro_dia").upsert(
       { loja_id: id, data: hojeISO(), ordem: 999 }, { onConflict: "user_id,data,loja_id", ignoreDuplicates: true },
     );
-    if (error) return toast.error(error.message);
+    if (error) return void toast.error(error.message);
     qc.invalidateQueries({ queryKey: ["roteiro"] });
     toast.success("Adicionada ao roteiro de hoje");
   }
   async function excluir() {
     const { error } = await supabase.from("lojas").delete().eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) return void toast.error(error.message);
     qc.invalidateQueries({ queryKey: ["lojas"] });
     toast.success("Loja excluída");
     navigate({ to: "/lojas" });

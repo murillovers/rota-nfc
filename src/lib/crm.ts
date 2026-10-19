@@ -38,7 +38,7 @@ export const PESOS_PADRAO: Pesos = { nota: 30, avaliacoes: 25, instagram: 15, si
 
 /** Potencial 0–100. pesoCategoria vai de 0 a 10. */
 export function calcularPotencial(
-  l: Pick<Loja, "google_nota" | "google_avaliacoes" | "instagram" | "site">,
+  l: { google_nota?: number | null | undefined; google_avaliacoes?: number | null | undefined; instagram?: string | null | undefined; site?: string | null | undefined },
   pesoCategoria: number,
   pesos: Pesos,
 ): number {
@@ -81,7 +81,7 @@ export function ordenarPorProximidade<T extends { latitude: number | null; longi
       const d = distanciaKm(atual, { lat: r.latitude!, lng: r.longitude! });
       if (d < melhorD) { melhorD = d; melhor = i; }
     });
-    const [p] = restantes.splice(melhor, 1);
+    const p = restantes.splice(melhor, 1)[0]!;
     out.push(p);
     atual = { lat: p.latitude!, lng: p.longitude! };
   }

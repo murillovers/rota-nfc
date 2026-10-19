@@ -12,8 +12,8 @@ function useDitado(onTexto: (t: string) => void) {
   const rec = useRef<any>(null);
   function alternar() {
     const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-    if (!SR) return toast.error("Ditado por voz não é suportado neste navegador");
-    if (ouvindo) { rec.current?.stop(); return; }
+    if (!SR) return void toast.error("Ditado por voz não é suportado neste navegador");
+    if (ouvindo) { rec.current?.stop(); return undefined; }
     const r = new SR();
     r.lang = "pt-BR"; r.continuous = true; r.interimResults = false;
     r.onresult = (e: any) => {
@@ -37,7 +37,7 @@ export function VisitaForm({ lojaId, onSalvo }: { lojaId: string; onSalvo: () =>
   const ditado = useDitado((t) => setNotas((n) => (n ? n + " " : "") + t.trim()));
 
   async function salvar() {
-    if (!resultado) return toast.error("Escolha o resultado da visita");
+    if (!resultado) return void toast.error("Escolha o resultado da visita");
     try {
       await registrar.mutateAsync({
         loja_id: lojaId, resultado, com_quem: comQuem || null, notas: notas || null,

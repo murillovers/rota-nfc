@@ -13,7 +13,7 @@ type Ordem = "prioridade" | "potencial" | "distancia";
 
 export const Route = createFileRoute("/_authenticated/lojas/")({
   head: pageHead("Lojas", "Lista de lojas com filtros e ordenação."),
-  validateSearch: (s: Record<string, unknown>) => ({ status: typeof s.status === "string" ? s.status : undefined }),
+  validateSearch: (s: Record<string, unknown>): { status?: string } => (typeof s["status"] === "string" ? { status: s["status"] } : {}),
   loader: ({ context }) => context.queryClient.ensureQueryData(lojasQuery),
   component: Lista,
 });

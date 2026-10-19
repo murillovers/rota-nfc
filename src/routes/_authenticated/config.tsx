@@ -36,7 +36,7 @@ function Config() {
   async function salvarPesos() {
     setSalvando(true);
     const { error } = await supabase.from("configuracoes").upsert({ pesos, atualizada_em: new Date().toISOString() });
-    if (error) { setSalvando(false); return toast.error(error.message); }
+    if (error) { setSalvando(false); return void toast.error(error.message); }
     await recalcularPotenciais(pesos);
     qc.invalidateQueries();
     setSalvando(false);
@@ -44,18 +44,18 @@ function Config() {
   }
   async function salvarCat(id: string, campo: "nome" | "peso", valor: string) {
     const { error } = await supabase.from("categorias").update(campo === "peso" ? { peso: Number(valor) } : { nome: valor }).eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) return void toast.error(error.message);
     qc.invalidateQueries({ queryKey: ["categorias"] });
   }
   async function addCat() {
     if (!nova.trim()) return;
     const { error } = await supabase.from("categorias").insert({ nome: nova.trim() });
-    if (error) return toast.error(error.message);
+    if (error) return void toast.error(error.message);
     setNova(""); qc.invalidateQueries({ queryKey: ["categorias"] });
   }
   async function delCat(id: string) {
     const { error } = await supabase.from("categorias").delete().eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) return void toast.error(error.message);
     qc.invalidateQueries({ queryKey: ["categorias"] });
   }
   async function carregarExemplos() {
@@ -63,13 +63,13 @@ function Config() {
       ...l, potencial: calcularPotencial(l, Number(cats.find((c) => c.nome === l.categoria)?.peso ?? 5), pesos),
     }));
     const { error } = await supabase.from("lojas").insert(rows);
-    if (error) return toast.error(error.message);
+    if (error) return void toast.error(error.message);
     qc.invalidateQueries({ queryKey: ["lojas"] });
     toast.success("10 lojas de exemplo criadas");
   }
   async function removerExemplos() {
     const { error } = await supabase.from("lojas").delete().eq("exemplo", true);
-    if (error) return toast.error(error.message);
+    if (error) return void toast.error(error.message);
     qc.invalidateQueries();
     toast.success("Dados de exemplo removidos");
   }

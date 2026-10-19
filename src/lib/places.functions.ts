@@ -27,8 +27,8 @@ export const importarLojasGoogle = createServerFn({ method: "POST" })
     return { categoria, regiao, maxPaginas: Math.min(3, Math.max(1, Number(d.maxPaginas ?? 3))) };
   })
   .handler(async ({ data, context }) => {
-    const LOVABLE_API_KEY = process.env.LOVABLE_API_KEY;
-    const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY;
+    const LOVABLE_API_KEY = process.env['LOVABLE_API_KEY'];
+    const GOOGLE_MAPS_API_KEY = process.env['GOOGLE_MAPS_API_KEY'];
     if (!LOVABLE_API_KEY || !GOOGLE_MAPS_API_KEY) throw new Error("Google Maps não está conectado");
     const { supabase, userId } = context;
 

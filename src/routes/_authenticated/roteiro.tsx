@@ -38,7 +38,7 @@ function Roteiro() {
 
   async function adicionar(lojaId: string) {
     const { error } = await supabase.from("roteiro_dia").insert({ loja_id: lojaId, data, ordem: itens.length });
-    if (error) return toast.error(error.message);
+    if (error) return void toast.error(error.message);
     setBusca(""); recarregar();
   }
   async function adicionarProximas() {
@@ -47,9 +47,9 @@ function Roteiro() {
       .filter((l) => !idsNoRoteiro.has(l.id) && !l.fechada && !l.duplicada && l.latitude != null && ["nao_visitada", "retornar", "interessada"].includes(l.status))
       .sort((a, b) => distanciaKm(origem, { lat: a.latitude!, lng: a.longitude! }) - distanciaKm(origem, { lat: b.latitude!, lng: b.longitude! }))
       .slice(0, 8);
-    if (!candidatas.length) return toast.info("Nenhuma loja próxima disponível");
+    if (!candidatas.length) return void toast.info("Nenhuma loja próxima disponível");
     const { error } = await supabase.from("roteiro_dia").insert(candidatas.map((l, i) => ({ loja_id: l.id, data, ordem: itens.length + i })));
-    if (error) return toast.error(error.message);
+    if (error) return void toast.error(error.message);
     toast.success(`${candidatas.length} lojas próximas adicionadas`);
     recarregar();
   }
@@ -67,7 +67,7 @@ function Roteiro() {
     const ids = itens.map((i) => i.id);
     const j = idx + dir;
     if (j < 0 || j >= ids.length) return;
-    [ids[idx], ids[j]] = [ids[j], ids[idx]];
+    const a = ids[idx]!, b = ids[j]!; ids[idx] = b; ids[j] = a;
     await salvarOrdem(ids);
   }
   async function remover(id: string) {
