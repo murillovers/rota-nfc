@@ -14,7 +14,226 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      categorias: {
+        Row: {
+          criada_em: string
+          id: string
+          nome: string
+          peso: number
+          user_id: string
+        }
+        Insert: {
+          criada_em?: string
+          id?: string
+          nome: string
+          peso?: number
+          user_id?: string
+        }
+        Update: {
+          criada_em?: string
+          id?: string
+          nome?: string
+          peso?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      configuracoes: {
+        Row: {
+          atualizada_em: string
+          pesos: Json
+          user_id: string
+        }
+        Insert: {
+          atualizada_em?: string
+          pesos?: Json
+          user_id?: string
+        }
+        Update: {
+          atualizada_em?: string
+          pesos?: Json
+          user_id?: string
+        }
+        Relationships: []
+      }
+      lojas: {
+        Row: {
+          bairro: string | null
+          categoria: string | null
+          cidade: string | null
+          criada_em: string
+          duplicada: boolean
+          endereco: string | null
+          exemplo: boolean
+          fechada: boolean
+          google_avaliacoes: number | null
+          google_nota: number | null
+          google_place_id: string | null
+          horario_funcionamento: string | null
+          id: string
+          instagram: string | null
+          latitude: number | null
+          longitude: number | null
+          melhor_horario: string | null
+          nome: string
+          nome_fantasia: string | null
+          observacoes: string | null
+          potencial: number
+          prioridade: string
+          responsavel: string | null
+          site: string | null
+          status: string
+          telefone: string | null
+          user_id: string
+          whatsapp: string | null
+        }
+        Insert: {
+          bairro?: string | null
+          categoria?: string | null
+          cidade?: string | null
+          criada_em?: string
+          duplicada?: boolean
+          endereco?: string | null
+          exemplo?: boolean
+          fechada?: boolean
+          google_avaliacoes?: number | null
+          google_nota?: number | null
+          google_place_id?: string | null
+          horario_funcionamento?: string | null
+          id?: string
+          instagram?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          melhor_horario?: string | null
+          nome: string
+          nome_fantasia?: string | null
+          observacoes?: string | null
+          potencial?: number
+          prioridade?: string
+          responsavel?: string | null
+          site?: string | null
+          status?: string
+          telefone?: string | null
+          user_id?: string
+          whatsapp?: string | null
+        }
+        Update: {
+          bairro?: string | null
+          categoria?: string | null
+          cidade?: string | null
+          criada_em?: string
+          duplicada?: boolean
+          endereco?: string | null
+          exemplo?: boolean
+          fechada?: boolean
+          google_avaliacoes?: number | null
+          google_nota?: number | null
+          google_place_id?: string | null
+          horario_funcionamento?: string | null
+          id?: string
+          instagram?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          melhor_horario?: string | null
+          nome?: string
+          nome_fantasia?: string | null
+          observacoes?: string | null
+          potencial?: number
+          prioridade?: string
+          responsavel?: string | null
+          site?: string | null
+          status?: string
+          telefone?: string | null
+          user_id?: string
+          whatsapp?: string | null
+        }
+        Relationships: []
+      }
+      roteiro_dia: {
+        Row: {
+          concluida: boolean
+          data: string
+          id: string
+          loja_id: string
+          ordem: number
+          user_id: string
+        }
+        Insert: {
+          concluida?: boolean
+          data?: string
+          id?: string
+          loja_id: string
+          ordem?: number
+          user_id?: string
+        }
+        Update: {
+          concluida?: boolean
+          data?: string
+          id?: string
+          loja_id?: string
+          ordem?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "roteiro_dia_loja_id_fkey"
+            columns: ["loja_id"]
+            isOneToOne: false
+            referencedRelation: "lojas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      visitas: {
+        Row: {
+          com_quem: string | null
+          criada_em: string
+          data_hora: string
+          id: string
+          loja_id: string
+          notas: string | null
+          objecoes: string | null
+          proximo_passo: string | null
+          resultado: string
+          user_id: string
+          voltar_em: string | null
+        }
+        Insert: {
+          com_quem?: string | null
+          criada_em?: string
+          data_hora?: string
+          id?: string
+          loja_id: string
+          notas?: string | null
+          objecoes?: string | null
+          proximo_passo?: string | null
+          resultado: string
+          user_id?: string
+          voltar_em?: string | null
+        }
+        Update: {
+          com_quem?: string | null
+          criada_em?: string
+          data_hora?: string
+          id?: string
+          loja_id?: string
+          notas?: string | null
+          objecoes?: string | null
+          proximo_passo?: string | null
+          resultado?: string
+          user_id?: string
+          voltar_em?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "visitas_loja_id_fkey"
+            columns: ["loja_id"]
+            isOneToOne: false
+            referencedRelation: "lojas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
